@@ -13,15 +13,15 @@ normalizeData=0;
 CreateRelation = 0;%1;
 FeatureExtractionFlag = 1;%1;% 1; % 1 do it others  skip
 createDependencyScale = 1;%1;
-Cluster = 1;%1;%
+Cluster = 0;%1;%
 
-pruneCluster = 1;
+pruneCluster = 0;
 
 motifidentification = 0; % work on pruned features
 savecaracteristics = 0;
 showOriginalImage = 0;
-mapdataintograyscale = 1;
-saveTSasImage = 1;
+mapdataintograyscale = 0;
+saveTSasImage = 0;
 
 % To report the  center variate to the right one in hte index
 PruningEntropy = 0;%1;%
@@ -45,12 +45,12 @@ end
 %
 
 %% cluster pruning and printing of the  motifs
-pruneCluster = 1;%0 % execute  the pruning using #prunewith removing the  outbound features in each  cluster
+pruneCluster = 0;%0 % execute  the pruning using #prunewith removing the  outbound features in each  cluster
 prunewith='Descriptor';% use this strategy to prune  the outbound features ina  cluster
 
 %% printing functionality
 saveMotifBP = 0; % show the clusters before pruning
-saveMotifAP = 1; % show the clusters after  pruning
+saveMotifAP = 0; % show the clusters after  pruning
 
 
 % Path Parameters
@@ -78,7 +78,57 @@ end
 KindofFeatures= 0; % 1 for DoG 0 for DoE
 
 
-for TSnumber = 1:10%183: 709
+
+LocM1 =[0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0	0	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	1
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0
+0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	1	0	0
+];
+
+LocM2=[0	1	1	0	0	0	0	0	0	0	0	0
+       1	0	0	0	0	0	0	0	0	0	0	0
+       1	0	0	0	0	0	0	0	0	0	0	0
+       0	0	0	0	1	1	0	0	0	0	0	0
+       0	0	0	1	0	0	0	0	0	0	0	0
+       0	0	0	1	0	0	0	0	0	0	0	0
+       0	0	0	0	0	0	0	1	1	0	0	0
+       0	0	0	0	0	0	1	0	0	0	0	0
+       0	0	0	0	0	0	1	0	0	0	0	0
+       0	0	0	0	0	0	0	0	0	0	1	1
+       0	0	0	0	0	0	0	0	0	1	0	0
+       0	0	0	0	0	0	0	0	0	1	0	0];
+LocM3=[];
+IDM1=1:27;
+IDM2= [1,2,3,1,2,3,4,5,6,7,8,9,4,5,6,4,5,6,7,8,9,10,11,12,10,11,12];
+IDM3=[];
+
+idm2{1} = IDM1;
+idm2{2} = IDM2;
+idm2{3} = IDM3;
+for TSnumber = 11:100%183: 709
     TEST =num2str(TSnumber); %'1';%
     TS_name=num2str(TSnumber);%
     distanceVaraiteTS=[datasetPath,'HopMatrix_multistory_aggregate.csv'];%'HopMatrix_multistory.csv'];
@@ -100,7 +150,7 @@ for TSnumber = 1:10%183: 709
     DeSigmaDepd = 0.5;%0.6;%0.5;%0.3;%
     DeSigmaTime = 4*sqrt(2)/2;%1.6*2^(1/DeLevelTime);%*2;%4*sqrt(2);%1.6*2^(1/DeLevelTime);%4*sqrt(2);%2*1.6*2^(1/DeLevelTime);%  8;%4*sqrt(2);%1.2*2^(1/DeLevelTime);%
     thresh = 0.04 / DeLevelTime / 2 ;%0.04;%
-    DeGaussianThres = 0.3;%0.1;%0.4;%1;%0.6;%2;%6; % TRESHOLD with the normalization of hte distance matrix should be  between 0 and 1
+    DeGaussianThres = 0.1;%0.1;%0.4;%1;%0.6;%2;%6; % TRESHOLD with the normalization of hte distance matrix should be  between 0 and 1
     DeSpatialBins = 4; %NUMBER OF BINs
     r= 10; %5 threshould variates
     
@@ -206,12 +256,15 @@ for TSnumber = 1:10%183: 709
         timeDescr=[];
         
         if(strcmp(FeaturesRM,'RMT'))
-            %             [frames1,descr1,gss1,dogss1,depd1,idm1, time, timee, timeDescr] = sift_gaussianSmooth(data',RELATION, DeOctTime, DeOctDepd,...
-            %                                                                                    DeLevelTime, DeLevelDepd, DeSigmaTime ,DeSigmaDepd,...
-            %                                                                                    DeSpatialBins, DeGaussianThres, r, sBoundary, eBoundary);
-            [frames1,descr1,gss1,dogss1,depd1,idm1, time, timee, timeDescr] = sift_gaussianSmooth_Silv(data',RELATION, DeOctTime, DeOctDepd,...
-                DeLevelTime, DeLevelDepd, DeSigmaTime ,DeSigmaDepd,...
-                DeSpatialBins, DeGaussianThres, r, sBoundary, eBoundary);
+             [frames1,descr1,gss1,dogss1,depd1,idm1, time, timee, timeDescr] = ...
+                                                                                        sift_gaussianSmooth_BirdSong(data',...
+                                                                                        LocM1 ,LocM2,LocM3,IDM1, IDM2, IDM3, DeOctTime, DeOctDepd,...
+                                                                                        DeLevelTime, DeLevelDepd, DeSigmaTime ,DeSigmaDepd,...
+                                                                                        DeSpatialBins, DeGaussianThres, r, sBoundary, eBoundary);
+%% Genuine code
+%             [frames1,descr1,gss1,dogss1,depd1,idm1, time, timee, timeDescr] = sift_gaussianSmooth_Silv(data',RELATION, DeOctTime, DeOctDepd,...
+%                 DeLevelTime, DeLevelDepd, DeSigmaTime ,DeSigmaDepd,...
+%                 DeSpatialBins, DeGaussianThres, r, sBoundary, eBoundary);
         elseif(strcmp(FeaturesRM,'RME'))
             [frames1,descr1,gss1,dogss1,depd1,idm1, time, timee, timeDescr] = sift_gaussianSmooth_entropy(data',RELATION, DeOctTime, DeOctDepd,...
                 DeLevelTime, DeLevelDepd, DeSigmaTime ,DeSigmaDepd,...

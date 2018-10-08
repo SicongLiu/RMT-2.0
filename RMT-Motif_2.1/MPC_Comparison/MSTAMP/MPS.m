@@ -19,11 +19,11 @@ saveMotifImages=0;
 
 %% alternative 1.a: the basic version
 %
-datasetPath= 'D:\Motif_Results\Datasets\SynteticDataset\Energy\';
+datasetPath= 'D:\Motif_Results\Datasets\SynteticDataset\BirdSong\';%Energy\';%Mocap\';%
 %'D:\Motif_Results\Datasets\SynteticDataset\Energy\';%Mocap\';%Building_MultiStory\';%BSONG\';
 %'D:\Motif_Results\Datasets\BirdSong\';
 %'D:\Motif_Results\Datasets\Mocap\';%'D:\Motif_Results\Datasets\SynteticDataset\';%
-ImageSavingPath='D:\Motif_Results\Datasets\SynteticDataset\Energy\MStamp\';
+ImageSavingPath='D:\Motif_Results\Datasets\SynteticDataset\BirdSong\MStamp\';%Energy\MStamp\';%Mocap\MStamp\';%
 %'D:\Motif_Results\Datasets\SynteticDataset\Energy\MStamp\';%Mocap\MStamp\';%Building_MultiStory\MStampB\';%BSONG\MStampB\';
 %'D:\Motif_Results\Datasets\BirdSong\MStampB\';
 %'D:\Motif_Results\Datasets\Mocap\MStampB\';%'D:\Motif_Results\Datasets\SynteticDataset\MStamp\';%
@@ -32,17 +32,17 @@ Name_OriginalSeries = AllTS;%[1,3,6,7];%ENERGY %[23,35,86,111];% MOCap Motif10[6
 %for pip=2:4
 % RW =csvread('D:\Motif_Results\Datasets\SynteticDataset\data\RW_0_1\RW_1.csv');
 % for NAME =23:154 %100:105%71:72%39:39%%46:57%34:45%34:39
-percent=[0; 0.1;0.25;0.5;0.75;1];% 0.1;0.5;0.75;1];
+percent=[0; 0.1;0.25;0.5;0.75;1;2];% 0.1;0.5;0.75;1];
 % for percentid=1:size(percent,1)
-for prcentid=1:size(percent,2)
+for prcentid=7:7%6%6%size(percent,1)
     percentagerandomwalk=percent(prcentid);
-    for numMotifInjected =1:3%10:10%3
+    for numMotifInjected =1:3%2:3%10:10%3
         for pip=1:30
             for NAME = 1:10
                 MotifBag_mstamp=[];
                 %      try
                 FeaturesRM='MStamp';
-                sublenght= 58;%76;%77;%ENERGY 32;%Bsong %58;%MOCAP 29;%   %[29,58];77;%12;%
+                sublenght= 32;%Bsong%58;%MOCAP% 58;%ENERGY %58;%ENERGY % 29;  %[29,58];77;%12;%
                 
                 %           TEST=[NAME]
                 TEST=['Motif',num2str(numMotifInjected),'_',num2str(Name_OriginalSeries(pip)),'_instance_',num2str(NAME),'_',num2str(percentagerandomwalk)]
@@ -50,12 +50,14 @@ for prcentid=1:size(percent,2)
                 TS_name=num2str(TEST);
                 data=csvread([datasetPath,'data\',TS_name,'.csv'])';%csvread('D:\Motif_Results\Datasets\SynteticDataset\data\Mocap_test1.csv');
                 data(isnan(data))=0;
-                data(1,:)=0;
-                data(end,:)=1;
-                % data1= csvread('D:\Motif_Results\Datasets\SynteticDataset\data\RandomWalks\RandomWalk_1.csv')';
-                %        data(:,[34,46]) = RW([34,46],1:size(data,1))';
+               %  data1= csvread(['D:\Motif_Results\Datasets\SynteticDataset\Mocap\data\RW_0_1\RW_',num2str(NAME),'.csv'])';
+                      %  data(1:2500,[34,46]) = data1(:,[34,46]);%,25,26
+%                         data(1,:)=1;
+%                         data(end,:)=0;
+                  
+                  
                 %                data(end,[34,46]) =1;
-                %       data(1,[34,46]) = 1;%data1(:,[34,46]);
+                %       data(1,[34,46]) = -1;%data1(:,[34,46]);
                 %      data(end,[34,46]) = 1;
                 %     data = (data - mean(data)) ...
                 %                                 / std(data, 1);
@@ -145,6 +147,7 @@ for prcentid=1:size(percent,2)
                 %% bag of motifs using MDL unconstrained search
                 tic;
                 %      try
+                if(size(motif_idx,1)~=0)
                 [allStartingMotifs,allMotifDepd] = unifyAllInstances (motif_idx,motif_dim,pro_idx);
                 MotifBag_mstamp = adaptiveKmedoids(data,allStartingMotifs,allMotifDepd,sub_len,n_bit,0.02);%0.003);%data,motif_idx,motif_dim,sub_len,n_bit, k,pro_idx);
                 %         MotifBag_mstamp = search_Instances(data,motif_idx,motif_dim,sub_len,n_bit, k,pro_idx);
@@ -176,14 +179,17 @@ for prcentid=1:size(percent,2)
                 %         end
                 
                 save ([datasave,'Motif_output_',TS_name,'Lenght_',num2str(sub_len),'.mat'],'pro_mul','pro_idx','motif_dim','motif_idx','MotifBag_mstamp');
-                
-                %col_header={'MSTAMP_32'};
-                %rowHeader ={'MSTAMP';'FindMotifInstance';'AKmedoids'};
-                csvwrite([datasave,'Time_',TS_name,'BoM_',num2str(i),'Lenght_',num2str(sub_len),'.csv'],TIME');
-                %xlswrite([datasave,'Time_',TS_name,'BoM_',num2str(i),'Lenght_',num2str(sub_len),'.xls'],TIME','TIME','B2');
+                csvwrite([datasave,'Time_',TS_name,'BoM_',num2str(i),'Lenght_',num2str(sub_len),'.xls'],TIME');
+%                 col_header={'MSTAMP_58'};
+%                 rowHeader ={'MSTAMP';'FindMotifInstance';'AKmedoids'};
+%                 xlswrite([datasave,'Time_',TS_name,'BoM_',num2str(i),'Lenght_',num2str(sub_len),'.xls'],TIME','TIME','B2');
 %                 xlswrite([datasave,'Time_',TS_name,'BoM_',num2str(i),'Lenght_',num2str(sub_len),'.xls'],rowHeader,'TIME','A2');
 %                 xlswrite([datasave,'Time_',TS_name,'BoM_',num2str(i),'Lenght_',num2str(sub_len),'.xls'],col_header,'TIME','B1');
-                clc;
+                clear('pro_mul','pro_idx','motif_dim','motif_idx','MotifBag_mstamp','motif_idx', 'motif_dim','TIME','data');
+%                clc;
+                else
+                xlswrite([ImageSavingPath,'Problem_',TS_name,'Lenght_',num2str(sub_len),'.xls'],'Problem with this file');    
+                end
                 %      catch
                 %      end
             end

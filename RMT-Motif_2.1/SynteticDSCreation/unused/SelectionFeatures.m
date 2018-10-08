@@ -1,13 +1,14 @@
 
 
 
-FeaturePath = 'D:\Motif_Results\Datasets\Mocap\Features_RMT\';
-DestDataPath = 'D:\Motif_Results\Datasets\SynteticDataset\Mocap\';
+FeaturePath = 'D:\Motif_Results\Datasets\Building_MultiStory\Features_RMT\';
+             %'D:\Motif_Results\Datasets\Mocap\Features_RMT\';
+DestDataPath = 'D:\Motif_Results\Datasets\SynteticDataset\Energy\';%Mocap\';
 DepO=2;
 DepT=2;
-nummotifs=10;
-TSCOnsidered=4;
-AllTS= randi([1,184],1,TSCOnsidered);
+nummotifs=5;
+TSCOnsidered=30;
+AllTS= randi([1,100],1,TSCOnsidered);%randi([1,184],1,TSCOnsidered);
 for numberofTS=1:TSCOnsidered
     TS_name = num2str(AllTS(numberofTS));
     
