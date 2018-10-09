@@ -1,5 +1,46 @@
 clc;
 clear;
+DataType='Energy'; 
+% DataType='Mocap';
+% DataType='BirdSong';
+
+featuresToInjectPath=['D:\Motif_Results\Datasets\SynteticDataset\',DataType,'\FeaturesToInject\'];
+%['D:\Motif_Results\Datasets\SynteticDataset\BSONG\FeaturesToInject\'];
+%['D:\Motif_Results\Datasets\SynteticDataset\data\FeaturesToInject\'];%MOCAP
+randomWalkPath = ['D:\Motif_Results\Datasets\SynteticDataset\',DataType,'\RW_0_1\RW_'];
+%['D:\Motif_Results\Datasets\SynteticDataset\BSONG\RW_0_1\RW_'];
+% ['D:\Motif_Results\Datasets\SynteticDataset\data\RW_0_1\RW_'];
+TimeSeriesPath = ['D:\Motif_Results\Datasets\',DataType,'\data\'];
+%['D:\Motif_Results\Datasets\BirdSong\data\'];
+%['D:\Motif_Results\Datasets\Mocap\data\'];
+
+DestDataPath = ['D:\Motif_Results\Datasets\SynteticDataset\',DataType];
+%\BSONG';
+NUM_VARIATE =27;%Energy;% 62;%MoCap;% 13;%BirdSong  %
+random_walk_instance = 10;
+motif_instances = 10; % MotifInstances= 10;
+RWlength = 2500;
+random_walk_scale = [0,0.1,0.25,0.5,0.75,1,2];%0.1;% randomWalkScale =
+possibleMotifNUM=[1,2,3,10];%AllTS;%
+length_percentage_1 = [1,0.75,0.5,1,0.75,0.5,1,0.75,0.5,1,0.75,0.5];%[1,0.75,0.5];
+length_percentage=[];
+for pssMotID =1:1%3
+  randid= randperm(motif_instances);
+  length_percentage=[length_percentage;length_percentage_1(randid)];
+end
+%                      0.75,0.5,1;
+%                      1,0.5,0.75];%0.5;% length_percentage =
+%originalTSIDArray=[23,35,86,111];%[1,3,6,7];%Energy %[64,70,80,147];%BirdSong; %[85,24,35,127];%Mocap
+load([featuresToInjectPath,'allTSid.mat']);
+originalTSIDArray=AllTS;
+
+
+
+
+
+
+
+
 
 number_of_files = 10;
 

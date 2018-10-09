@@ -1,18 +1,14 @@
-
-
-
-
 FeaturePath = 'D:\Motif_Results\Datasets\Mocap\Features_RMT\';
-             %'D:\Motif_Results\Datasets\Mocap\Features_RMT\';
 Dset='Mocap';%'BirdSong';%'Energy';%'BirdSong';%Bird Song %'ASL';%'data';%for Mocap
 DestDataPath = ['D:\Motif_Results\Datasets\SynteticDataset\',Dset,'\'];
 %DestDataPath = 'D:\Motif_Results\Datasets\BirdSong\';%Energy\';%Mocap\';
+
 DepO=2;
 DepT=2;
-nummotifs=3;
-TSCOnsidered=90;
-AllTS= randperm(154,TSCOnsidered);%randi([1,154],1,TSCOnsidered);
-for numberofTS=1:TSCOnsidered
+nummotifs = 3;
+TSConsidered = 90;
+AllTS= randperm(154,TSConsidered);%randi([1,154],1,TSConsidered);
+for numberofTS=1:TSConsidered
     TS_name = num2str(AllTS(numberofTS));
     
     savepath1 = [FeaturePath,TS_name,'/feature_',TS_name,'.mat'];
@@ -22,20 +18,20 @@ for numberofTS=1:TSCOnsidered
     load(savepath2);
     load(savepath3);
     
-    indexfeatureGroup = (frame1(6,:)==2 & frame1(5,:)==2);
-    X=frame1(:,indexfeatureGroup);
-    Check= sum(X(11:end,:)>eps);
-    X(:,Check<=64)=[];
-    [rows,colmn]= size(X);
-    dpscale = csvread(strcat(FeaturePath,TS_name,'/DistancesDescriptor\DepdScale_IM_',TS_name,'_DepO_',num2str(DepO),'_TimeO_',num2str(DepT),'.csv'));
-    dpscale(:,Check<=64)=[];
-    indexfeatureGroup= (X(4,:)==max(X(4,:)));
-    X=X(:,indexfeatureGroup) ;
-    dpscale=(dpscale(:,indexfeatureGroup)); 
-    Features=[];
-    Dependency=[];
-    i=1;
-    if size(X,2)==0
+    indexfeatureGroup = (frame1(6,:) == DepT & frame1(5,:) == DepO);
+    X = frame1(:,indexfeatureGroup);
+    Check = sum(X(11:end,:) > eps);
+    X(:,Check <= 64) = [];
+    [rows,colmn] = size(X);
+    dpscale = csvread(strcat(FeaturePath, TS_name, '/DistancesDescriptor\DepdScale_IM_', TS_name, '_DepO_', num2str(DepO), '_TimeO_', num2str(DepT),'.csv'));
+    dpscale(:,Check <= 64) = [];
+    indexfeatureGroup = (X(4,:) == max(X(4,:)));
+    X = X(:,indexfeatureGroup) ;
+    dpscale = (dpscale(:,indexfeatureGroup)); 
+    Features = [];
+    Dependency = [];
+    i = 1;
+    if size(X,2) == 0
      
      TS_name
     end
